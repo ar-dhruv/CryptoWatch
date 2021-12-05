@@ -7,6 +7,7 @@ export class AppProvider extends React.Component {
     super(props);
     this.state = {
       page: "settings",
+      setPage: this.setPage,
     };
   }
 
