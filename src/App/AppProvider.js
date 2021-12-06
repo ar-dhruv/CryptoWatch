@@ -7,14 +7,17 @@ cc.setApiKey(
 
 export const AppContext = React.createContext();
 
+const MAX_FAVOURITES = 10;
+
 export class AppProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       page: "dashboard",
-      favourites: ['BTC', 'ETH', 'XMR', 'DOGE'],
+      favourites: ["BTC", "ETH", "XMR", "DOGE"],
       ...this.savedSettings(),
       setPage: this.setPage,
+      addCoin : this.addCoin,
       confirmFavourites: this.confirmFavourites,
     };
   }
@@ -27,6 +30,14 @@ export class AppProvider extends React.Component {
     let coinList = (await cc.coinList()).Data;
     this.setState({ coinList });
     console.log(coinList);
+  };
+
+  addCoin = (key) => {
+    let favourites = [...this.state.favourites];
+    if (favourites.length < MAX_FAVOURITES) {
+      favourites.push(key);
+      this.setState({favourites});
+    }
   };
 
   confirmFavourites = () => {
