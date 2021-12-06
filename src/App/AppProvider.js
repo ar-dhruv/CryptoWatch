@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 const cc = require("cryptocompare");
 cc.setApiKey(
@@ -17,7 +18,8 @@ export class AppProvider extends React.Component {
       favourites: ["BTC", "ETH", "XMR", "DOGE"],
       ...this.savedSettings(),
       setPage: this.setPage,
-      addCoin : this.addCoin,
+      addCoin: this.addCoin,
+      removeCoin:this.removeCoin,
       confirmFavourites: this.confirmFavourites,
     };
   }
@@ -36,8 +38,13 @@ export class AppProvider extends React.Component {
     let favourites = [...this.state.favourites];
     if (favourites.length < MAX_FAVOURITES) {
       favourites.push(key);
-      this.setState({favourites});
+      this.setState({ favourites });
     }
+  };
+
+  removeCoin = (key) => {
+    let favourites = [...this.state.favourites];
+    this.setState({ favourites: _.pull(favourites, key) });
   };
 
   confirmFavourites = () => {
