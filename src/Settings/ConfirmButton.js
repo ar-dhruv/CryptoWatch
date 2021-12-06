@@ -1,11 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 import { AppContext } from "../App/AppProvider";
+import { fontSize1, greenBoxShadow, color3 } from "../Shared/Styles";
 
 const ConfirmButtonStyled = styled.div`
   margin: 20px;
-  color: green;
-  cursor:pointer;
+  color: ${color3};
+  ${fontSize1};
+  padding: 5px;
+  cursor: pointer;
+  &:hover {
+    ${greenBoxShadow}
+  }
 `;
 
 export const CenterDiv = styled.div`
@@ -14,14 +20,15 @@ export const CenterDiv = styled.div`
 `;
 
 export default function () {
-  return <AppContext.Consumer>
-      {
-          ({confirmFavourites}) =>
-          <CenterDiv>
-              <ConfirmButtonStyled onClick = {confirmFavourites}>
-                  Confirm Favourites
-                </ConfirmButtonStyled>
-          </CenterDiv>
-      }
-  </AppContext.Consumer>;
+  return (
+    <AppContext.Consumer>
+      {({ confirmFavourites }) => (
+        <CenterDiv>
+          <ConfirmButtonStyled onClick={confirmFavourites}>
+            Confirm Favourites
+          </ConfirmButtonStyled>
+        </CenterDiv>
+      )}
+    </AppContext.Consumer>
+  );
 }
