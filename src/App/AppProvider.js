@@ -19,7 +19,8 @@ export class AppProvider extends React.Component {
       ...this.savedSettings(),
       setPage: this.setPage,
       addCoin: this.addCoin,
-      removeCoin:this.removeCoin,
+      removeCoin: this.removeCoin,
+      isInFavourites: this.isInFavourites,
       confirmFavourites: this.confirmFavourites,
     };
   }
@@ -46,6 +47,8 @@ export class AppProvider extends React.Component {
     let favourites = [...this.state.favourites];
     this.setState({ favourites: _.pull(favourites, key) });
   };
+
+  isInFavourites = (key) => _.includes(this.state.favourites, key);
 
   confirmFavourites = () => {
     this.setState({
