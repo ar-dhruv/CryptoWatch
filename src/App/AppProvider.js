@@ -28,12 +28,31 @@ export class AppProvider extends React.Component {
 
   componentDidMount = () => {
     this.fetchCoins();
+    this.fetchPrices();
   };
 
   fetchCoins = async () => {
     let coinList = (await cc.coinList()).Data;
     this.setState({ coinList });
-    console.log(coinList);
+  };
+
+  fetchPrices = async () => {
+    if (this.state.firstVisit) return;
+    let prices = await this.prices();
+    this.setState({ prices });
+  };
+
+  prices = async () => {
+    let returnData = [];
+    for (let i = 0; i < this.state.favourites.length; i++) {
+      try {
+        let priceData = await cc.priceFull(this.state.favourites[i], "USD");
+        returnData.push(priceData);
+      } catch (e) {
+        console.warn("Fetch price error: ", e);
+      }
+    }
+    return returnData;
   };
 
   addCoin = (key) => {
@@ -52,10 +71,15 @@ export class AppProvider extends React.Component {
   isInFavourites = (key) => _.includes(this.state.favourites, key);
 
   confirmFavourites = () => {
-    this.setState({
-      firstVisit: false,
-      page: "dashboard",
-    });
+    this.setState(
+      {
+        firstVisit: false,
+        page: "dashboard",
+      },
+      () => {
+        this.fetchPrices();
+      }
+    );
     localStorage.setItem(
       "cryptoWatch",
       JSON.stringify({
