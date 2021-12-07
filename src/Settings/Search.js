@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { backgroundColor2, fontSize2 } from "../Shared/Styles";
 import { AppContext } from "../App/AppProvider";
-import _ from "lodash";
+import _, { result } from "lodash";
 import fuzzy from "fuzzy";
 
 const SearchGrid = styled.div`
@@ -19,15 +19,25 @@ const SearchInput = styled.input`
   place-self: center left;
 `;
 
-const handleFilter = _.debounce((inputValue, coinList, setFilteredCoins) => {
+const handleFilter = _.debounce((inputValue, coinList, setFilterCoins) => {
   //Get all the coin symbols
   let coinSymbols = Object.keys(coinList);
   //Get all the coin names and map the symbol to the name
   let coinNames = coinSymbols.map((sym) => coinList[sym].CoinName);
   //creating search string by joining symbol and name of the coin
   let allStringsToSearch = coinSymbols.concat(coinNames);
-  let fuzzyResults = fuzzy.filter(inputValue, allStringsToSearch, {});
-  console.log(fuzzyResults);
+  let fuzzyResults = fuzzy
+    .filter(inputValue, allStringsToSearch, {})
+    .map((result) => result.string);
+
+  let filteredCoins = _.pickBy(coinList, (result, symKey) => {
+    let coinName = result.CoinName;
+    return (
+      _.includes(fuzzyResults, symKey) || _.includes(fuzzyResults, coinName)
+    );
+  });
+  console.log(filteredCoins);
+  setFilterCoins(filteredCoins);
 }, 500);
 
 function filterCoins(e, setFilteredCoins, coinList) {
