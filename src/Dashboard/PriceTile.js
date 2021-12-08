@@ -8,6 +8,10 @@ const JustifyRight = styled.div`
   justify-self: right;
 `;
 
+const JustifyLeft = styled.div`
+  justify-self: left;
+`;
+
 const TickerPrice = styled.div`
   ${fontSizeBig}
 `;
@@ -29,7 +33,11 @@ const PriceTileStyled = styled(SelectableTile)`
   ${(props) =>
     props.compact &&
     css`
+      display: grid;
       ${fontSize3}
+      grid-gap : 5px;
+      grid-template-columns: repeat(3, 1fr);
+      justify-items: right;
     `}
 `;
 
@@ -55,9 +63,21 @@ function PriceTile({ sym, data }) {
   );
 }
 
+function PriceTileCompact({ sym, data }) {
+  return (
+    <PriceTileStyled compact>
+      <JustifyLeft> {sym} </JustifyLeft>
+      <ChangePercent data={data} />
+      <div>${numberFormat(data.PRICE)}</div>
+    </PriceTileStyled>
+  );
+}
+
 export default function ({ price, index }) {
   let sym = Object.keys(price)[0];
   let data = price[sym]["USD"];
 
-  return <PriceTile sym={sym} data={data}></PriceTile>;
+  let TileClass = index < 5 ? PriceTile : PriceTileCompact;
+
+  return <TileClass sym={sym} data={data}></TileClass>;
 }
