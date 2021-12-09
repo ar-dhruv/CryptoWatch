@@ -17,7 +17,8 @@ const ControlButtonElem = styled.div`
   ${(props) =>
     props.active &&
     css`
-      text-shadow: 0px 0px 60px #03ff03;
+      // text-shadow: 0px 5px 12px #ffff00;
+      color: rgb(255, 255, 0);
     `}
   ${(props) =>
     props.hidden &&
@@ -46,10 +47,10 @@ function ControlButton({ name }) {
   );
 }
 
-export default function () {
+export default function() {
   return (
     <Bar>
-      <Logo> CryptoDash </Logo>
+      <Logo> CryptoWatch </Logo>
       <div />
       <ControlButton active name="dashboard" />
       <ControlButton name="settings" />
