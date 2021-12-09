@@ -13,7 +13,7 @@ export class AppProvider extends React.Component {
     super(props);
     this.state = {
       page: "dashboard",
-      favorites: ["BTC", "ETH", "SOL", "DOGE"],
+      favorites: ["BTC", "ETH", "SOL", "DOGE", "ADA"],
       timeInterval: "months",
       ...this.savedSettings(),
       setPage: this.setPage,
@@ -122,7 +122,7 @@ export class AppProvider extends React.Component {
       }
     );
     localStorage.setItem(
-      "cryptoDash",
+      "cryptoWatch",
       JSON.stringify({
         favorites: this.state.favorites,
         currentFavorite,
@@ -140,20 +140,20 @@ export class AppProvider extends React.Component {
     );
 
     localStorage.setItem(
-      "cryptoDash",
+      "cryptoWatch",
       JSON.stringify({
-        ...JSON.parse(localStorage.getItem("cryptoDash")),
+        ...JSON.parse(localStorage.getItem("cryptoWatch")),
         currentFavorite: sym,
       })
     );
   };
 
   savedSettings() {
-    let cryptoDashData = JSON.parse(localStorage.getItem("cryptoDash"));
-    if (!cryptoDashData) {
+    let cryptoWatchData = JSON.parse(localStorage.getItem("cryptoWatch"));
+    if (!cryptoWatchData) {
       return { page: "settings", firstVisit: true };
     }
-    let { favorites, currentFavorite } = cryptoDashData;
+    let { favorites, currentFavorite } = cryptoWatchData;
     return { favorites, currentFavorite };
   }
 
