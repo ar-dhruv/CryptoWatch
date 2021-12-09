@@ -1,6 +1,6 @@
 import React from "react";
 import { AppContext } from "../App/AppProvider";
-import { SelectableTile, DeletableTile, DisabledTile } from "../Shared/Tile";
+import { SelectableTile, DisabledTile, DeletableTile } from "../Shared/Tile";
 import CoinHeaderGrid from "./CoinHeaderGrid";
 import CoinImage from "../Shared/CoinImage";
 
@@ -17,14 +17,13 @@ function clickCoinHandler(topSection, coinKey, addCoin, removeCoin) {
 export default function ({ coinKey, topSection }) {
   return (
     <AppContext.Consumer>
-      {({ coinList, addCoin, removeCoin, isInFavourites }) => {
+      {({ coinList, addCoin, removeCoin, isInFavorites }) => {
         let coin = coinList[coinKey];
 
         let TileClass = SelectableTile;
-
-        if (topSection === true) {
+        if (topSection) {
           TileClass = DeletableTile;
-        } else if (isInFavourites(coinKey)) {
+        } else if (isInFavorites(coinKey)) {
           TileClass = DisabledTile;
         }
 

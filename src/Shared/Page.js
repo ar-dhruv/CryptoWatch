@@ -8,7 +8,7 @@ export default function ({ name, children }) {
         if (page !== name) {
           return null;
         }
-        return <div>{children}</div>;
+        return <div> {children} </div>;
       }}
     </AppContext.Consumer>
   );

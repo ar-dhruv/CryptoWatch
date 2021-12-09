@@ -7,8 +7,7 @@ export default function ({ firstVisit }) {
       {({ firstVisit }) =>
         firstVisit ? (
           <div>
-            Welcome to CryptoWatch , Please select your favourite coins to
-            begin.{" "}
+            Welcome to CryptoDash, please select your favorite coins to begin.{" "}
           </div>
         ) : null
       }
