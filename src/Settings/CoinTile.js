@@ -14,7 +14,7 @@ function clickCoinHandler(topSection, coinKey, addCoin, removeCoin) {
       };
 }
 
-export default function ({ coinKey, topSection }) {
+export default function({ coinKey, topSection }) {
   return (
     <AppContext.Consumer>
       {({ coinList, addCoin, removeCoin, isInFavorites }) => {
@@ -33,7 +33,7 @@ export default function ({ coinKey, topSection }) {
           >
             <CoinHeaderGrid
               topSection={topSection}
-              name={coin.CoinName}
+              name={coin.CoinName.slice(0, 9) + ".."}
               symbol={coin.Symbol}
             />
             <CoinImage coin={coin} />
